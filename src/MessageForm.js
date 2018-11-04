@@ -75,13 +75,14 @@ class MessageForm extends Component {
 
 	render() {
 		return(
-            <form className="Chat-messageForm" onSubmit={this.handleSubmit}>
+            <form className="Chat-footer-messageForm" onSubmit={this.handleSubmit}>
                 <input
                     onChange={this.handleChange}
                     onKeyDown={this.handleKeyDown}
                     value={this.state.activeMessageBody}
                     placeholder="Type something..."
-                    type="text" />
+                    type="text" 
+                    autoFocus />
             </form>
 		);
 	}

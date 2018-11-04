@@ -58,7 +58,8 @@ class NickDialog extends Component {
                         value={this.state.newNick}
                         placeholder="New Nickname"
                         type="text" 
-                        maxLength="15" />
+                        maxLength="15" 
+                        autoFocus />
 
                     <button type="submit">OK</button>
                     <button onClick={this.handleCloseButtonClick}>Cancel</button>
