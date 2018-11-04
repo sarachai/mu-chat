@@ -190,13 +190,21 @@ class App extends Component {
 		return socketId === this.state.mySocketId;
 	}
 
+	handleLogoClick() {
+		alert('Mü-Chat\nVersion: 2.0.0');
+	}
+
 	render() {
 		if (!this.state.mySocketId) {
 			return null;
 		}
 
+		const logo = `  /\\/\\
+=( - -)=`;
+
 		return(
 			<div className="Chat">
+				<div className="Chat-logo" onClick={this.handleLogoClick}><pre>{logo}</pre></div>
 				<div className="Chat-body">
 					<Messages
 						messages={this.state.messages} />
