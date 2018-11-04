@@ -64,7 +64,11 @@ io.sockets.on('connection', function(socket) {
 
 	socket.on('clientIsAway', function(socketId) {
 		let buddy = buddylist.get(socketId);
-		buddy.isAway = true;
+
+		// temp, there's sometimes orphan buddies when browser windows are kept open and server restarts.
+		if (buddy) {
+			buddy.isAway = true;
+		}
 
 		buddylist.set(socketId, buddy);
 		io.sockets.emit('serverBuddylistUpdate', Array.from(buddylist));
@@ -72,7 +76,11 @@ io.sockets.on('connection', function(socket) {
 
 	socket.on('clientHasReturned', function(socketId) {
 		let buddy = buddylist.get(socketId);
-		buddy.isAway = false;
+
+		// temp, there's sometimes orphan buddies when browser windows are kept open and server restarts.
+		if (buddy) {
+			buddy.isAway = false;
+		}
 
 		buddylist.set(socketId, buddy);
 		io.sockets.emit('serverBuddylistUpdate', Array.from(buddylist));
