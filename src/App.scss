@@ -1,0 +1,255 @@
+/*----- Variables -----*/
+
+$fontDefault: 'Roboto Mono', monospace;
+
+$colorWhite: #fafafa;
+$colorLightGrey: #808080;
+$colorDarkGrey: #4a4a4a;
+$colorDarkerGrey: #2a2a2a;
+$colorBlack: #1b1b1b;
+$colorOrange: #DB9450;
+$colorGreen: #32926A;
+
+$colorBorder: $colorDarkerGrey;
+$colorUserNick: $colorOrange;
+$colorSystemNick: $colorGreen;
+
+$padding: 3em;
+
+// Top-Level Element Layout: Horizontal
+$widthBuddylist: 250px;
+$widthMessages: calc(100% - #{$widthBuddylist});
+
+// Top-Level Element Layout: Vertical
+$heightMessageForm: 120px;
+$heightMessages: calc(100vh - #{$heightMessageForm});
+$heightBuddylist: $heightMessages;
+
+// Message Timestamp + Nick Layout
+$widthMessageMeta: 170px;
+$widthMessageBody: calc(100% - #{$widthMessageMeta});
+
+
+
+/*----- Base -----*/
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: $colorBlack;
+	color: $colorWhite;
+	font-family: $fontDefault;
+	font-size: 13px;
+	line-height: 1.4em;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: $colorWhite;
+	text-decoration: underline;
+}
+
+
+
+/*----- Chat -----*/
+
+.Chat {
+
+	display: flex;
+	flex-wrap: wrap;
+
+
+	
+	/*----- Messages -----*/
+
+	&-messages {
+		width: $widthMessages;
+		height: $heightMessages;
+		padding: $padding;
+		overflow-y: auto;
+
+		&-list {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+
+			&-item {
+				display: flex;
+				margin: 0;
+				padding: 0;
+				overflow: hidden; 
+
+				&-meta {
+					display: flex;
+					justify-content: space-between;
+					align-items: baseline;
+					width: $widthMessageMeta;
+	
+					&-timestamp {
+						color: $colorDarkGrey;
+						font-size: 0.75em;
+					}
+		
+					&-nick {
+						opacity: 0.7;
+						color: $colorUserNick;
+	
+						&:before {
+							content:'<';
+						}
+			
+						&:after {
+							content:'>';
+						}
+					}
+				}
+	
+				&-body {
+					opacity: 0.7;
+					width: $widthMessageBody;
+					padding-left: $padding/2;
+
+					&-splashScreenMessage {
+						font-family: $fontDefault;
+						margin: 0;
+					}
+				}
+			}
+
+			.is-system-message &-item {
+				&-meta {
+					&-nick {
+						opacity: 1;
+						color: $colorSystemNick;
+					}
+				}
+
+				&-body {
+					opacity: 1;
+					color: $colorLightGrey;
+				}
+			}
+
+			.is-active-message &-item {
+				&-meta-nick,
+				&-body {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+
+
+	/*----- Buddylist -----*/
+
+	&-buddylist {
+		list-style-type: none;
+		width: $widthBuddylist;
+		height: $heightBuddylist;
+		margin: 0;
+		padding: 3em;
+		border-left: 1px solid $colorBorder;
+
+		&-item {
+			&.is-away {
+				opacity: 0.5;
+				font-style: italic;
+			}
+
+			&.is-me {
+				cursor: pointer;
+			}
+
+			&.is-me &-nick {
+				&:before {
+					content: '^';
+				}
+			}
+		}
+	}
+
+
+
+	/*----- Message Form -----*/
+
+	&-messageForm {
+		display: flex;
+		width: 100%;
+		height: $heightMessageForm;
+		border-top: 1px solid $colorBorder;
+
+		input {
+			width: 100%;
+			padding: 0 $padding;
+			background: transparent;
+			border: none;
+			color: $colorWhite;
+			font-family: $fontDefault;
+			font-size: inherit;
+			outline: 0;
+		}
+	
+		input::-webkit-input-placeholder { color: $colorDarkGrey; }
+		input:-moz-placeholder { color: $colorDarkGrey; }
+		input::-moz-placeholder { color: $colorDarkGrey; }
+		input:-ms-input-placeholder { color: $colorDarkGrey; }
+	}
+
+
+
+	/*----- Nick Dialog -----*/
+
+	&-nickDialog {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		form {
+			width: 300px;
+			padding: $padding;
+			background: rgba($colorBlack, 0.85);
+			border: 1px solid $colorGreen;
+			text-align: center;
+
+			input {
+				background: $colorBlack;
+				color: $colorWhite;
+				padding: $padding/2 $padding/2;
+				border: none;
+				border-bottom: 1px dotted $colorGreen;
+				font-family: $fontDefault;
+				font-size: inherit;
+				outline: 0;
+			}
+		
+			input::-webkit-input-placeholder { color: $colorLightGrey; }
+			input:-moz-placeholder { color: $colorLightGrey; }
+			input::-moz-placeholder { color: $colorLightGrey; }
+			input::-ms-input-placeholder { color: $colorLightGrey; }
+		
+			button {
+				display: inline-block;
+				margin: $padding/2 0 0 $padding/2;
+				padding: $padding/6 $padding/2;
+				background: $colorLightGrey;
+				color: $colorDarkerGrey;
+				font-family: $fontDefault;
+				text-align: center;
+				text-decoration: none;
+			}
+		
+			button[type=submit] {
+				margin-left: 0;
+				background: $colorGreen;
+			}
+		}
+	}
+}

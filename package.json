@@ -1,0 +1,47 @@
+{
+  "name": "muchat",
+  "version": "2.0.0",
+  "description": "Mü-Chat... Chat awhile.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "windevclient": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
+    "windevserver": "node ./server.js",
+    "winbuild": "node ./node_modules/webpack/bin/webpack.js --mode development"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "moment": "^2.22.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.6.0",
+    "react-hot-loader": "^4.3.11",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.8",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "autoprefixer": "^9.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarachai/muchat.git"
+  },
+  "author": "Sara Chai Butler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarachai/muchat/issues"
+  },
+  "homepage": "https://github.com/sarachai/muchat#readme"
+}
