@@ -6,28 +6,22 @@ $colorWhite: #fafafa;
 $colorLightGrey: #808080;
 $colorDarkGrey: #4a4a4a;
 $colorDarkerGrey: #2a2a2a;
+$colorDarkestGrey: #1f1f1f;
 $colorBlack: #1b1b1b;
 $colorOrange: #DB9450;
 $colorGreen: #32926A;
 
 $colorBorder: $colorDarkerGrey;
+$colorScrollbar: $colorDarkestGrey;
+$colorScrollbarHover: $colorDarkerGrey;
 $colorUserNick: $colorOrange;
 $colorSystemNick: $colorGreen;
 
-$padding: 3em;
-
-// Top-Level Element Layout: Horizontal
+$padding: 20px;
+$scrollbarPadding: 7px;
 $widthBuddylist: 250px;
-$widthMessages: calc(100% - #{$widthBuddylist});
-
-// Top-Level Element Layout: Vertical
 $heightMessageForm: 120px;
-$heightMessages: calc(100vh - #{$heightMessageForm});
-$heightBuddylist: $heightMessages;
-
-// Message Timestamp + Nick Layout
 $widthMessageMeta: 170px;
-$widthMessageBody: calc(100% - #{$widthMessageMeta});
 
 
 
@@ -54,152 +48,218 @@ a:link, a:visited, a:hover, a:active {
 
 
 
-/*----- Chat -----*/
+/*----- Chat ----------------------------
+	
+ 	LAYOUT:
+
+	[ Body: Messages ][ Body: Buddylist ]
+	[       Footer: Message Form        ]
+
+-----------------------------------------*/
+
 
 .Chat {
 
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
+	height: 100vh;
 
 
-	
-	/*----- Messages -----*/
+	/*-----	Body -----*/
 
-	&-messages {
-		width: $widthMessages;
-		height: $heightMessages;
-		padding: $padding;
-		overflow-y: auto;
+	&-body {
+		display: flex;
+		flex: 1;
 
-		&-list {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
+		
+		/*----- Messages -----*/
 
-			&-item {
-				display: flex;
+		&-messages {
+			flex: 1;
+			margin: $scrollbarPadding $scrollbarPadding $scrollbarPadding 0;
+			padding: ($padding - $scrollbarPadding) $padding;
+			overflow-y: auto;
+
+			$widthScrollBar: 7px;
+
+			&::-webkit-scrollbar-button { 
+				display: none; 
+			} 
+
+			&::-webkit-scrollbar-button:hover { 
+				display: none;
+			} 
+
+			&::-webkit-scrollbar-thumb { 
+				background-color: $colorScrollbar; 
+				box-shadow: none; 
+				border-radius: $widthScrollBar;
+			} 
+
+			&::-webkit-scrollbar-thumb:hover { 
+				background-color: $colorScrollbarHover; 
+				box-shadow: none; 
+				border-radius: $widthScrollBar;
+			} 
+
+			&::-webkit-scrollbar-track { 
+				background-color: transparent; 
+				box-shadow: none; 
+				border-radius: $widthScrollBar; 
+			} 
+
+			&::-webkit-scrollbar-track:hover { 
+				background-color: transparent; 
+				box-shadow: none; 
+				border-radius: $widthScrollBar; 
+			} 
+
+			&::-webkit-scrollbar { 
+				width: $widthScrollBar; 
+			}
+			
+			&-list {
+				list-style-type: none;
 				margin: 0;
 				padding: 0;
-				overflow: hidden; 
+				overflow: hidden;
 
-				&-meta {
+				&-item {
 					display: flex;
-					justify-content: space-between;
-					align-items: baseline;
-					width: $widthMessageMeta;
-	
-					&-timestamp {
-						color: $colorDarkGrey;
-						font-size: 0.75em;
-					}
+					margin: 0;
+					padding: 0;
+					overflow: hidden; 
+
+					&-meta {
+						display: flex;
+						flex-shrink: 0;
+						justify-content: space-between;
+						align-items: baseline;
+						width: $widthMessageMeta;
 		
-					&-nick {
-						opacity: 0.7;
-						color: $colorUserNick;
-	
-						&:before {
-							content:'<';
+						&-timestamp {
+							color: $colorDarkGrey;
+							font-size: 0.75em;
 						}
 			
-						&:after {
-							content:'>';
+						&-nick {
+							opacity: 0.7;
+							color: $colorUserNick;
+		
+							&:before {
+								content:'<';
+							}
+				
+							&:after {
+								content:'>';
+							}
+						}
+					}
+		
+					&-body {
+						flex: 1;
+						opacity: 0.7;
+						padding-left: $padding/2;
+
+						&-splashScreenMessage {
+							font-family: $fontDefault;
+							margin: 0;
 						}
 					}
 				}
-	
-				&-body {
-					opacity: 0.7;
-					width: $widthMessageBody;
-					padding-left: $padding/2;
 
-					&-splashScreenMessage {
-						font-family: $fontDefault;
-						margin: 0;
+				.is-system-message &-item {
+					&-meta {
+						&-nick {
+							opacity: 1;
+							color: $colorSystemNick;
+						}
 					}
-				}
-			}
 
-			.is-system-message &-item {
-				&-meta {
-					&-nick {
+					&-body {
 						opacity: 1;
-						color: $colorSystemNick;
+						color: $colorLightGrey;
 					}
 				}
 
-				&-body {
-					opacity: 1;
-					color: $colorLightGrey;
+				.is-active-message &-item {
+					&-meta-nick,
+					&-body {
+						opacity: 1;
+					}
 				}
 			}
+		}
 
-			.is-active-message &-item {
-				&-meta-nick,
-				&-body {
-					opacity: 1;
+
+
+		/*----- Buddylist -----*/
+
+		&-buddylist {
+			flex-shrink: 0;
+			list-style-type: none;
+			width: $widthBuddylist;
+			margin: 0;
+			padding: $padding;
+			border-left: 1px solid $colorBorder;
+
+			&-item {
+				&.is-away {
+					opacity: 0.5;
+					font-style: italic;
+				}
+
+				&.is-me {
+					cursor: pointer;
+				}
+
+				&.is-me &-nick {
+					&:before {
+						content: '^';
+					}
 				}
 			}
 		}
 	}
 
 
+	/*-----	Footer -----*/
 
-	/*----- Buddylist -----*/
-
-	&-buddylist {
-		list-style-type: none;
-		width: $widthBuddylist;
-		height: $heightBuddylist;
-		margin: 0;
-		padding: 3em;
-		border-left: 1px solid $colorBorder;
-
-		&-item {
-			&.is-away {
-				opacity: 0.5;
-				font-style: italic;
-			}
-
-			&.is-me {
-				cursor: pointer;
-			}
-
-			&.is-me &-nick {
-				&:before {
-					content: '^';
-				}
-			}
-		}
-	}
-
-
-
-	/*----- Message Form -----*/
-
-	&-messageForm {
+	&-footer {
 		display: flex;
-		width: 100%;
+		flex-shrink: 0;
 		height: $heightMessageForm;
 		border-top: 1px solid $colorBorder;
 
-		input {
-			width: 100%;
-			padding: 0 $padding;
-			background: transparent;
-			border: none;
-			color: $colorWhite;
-			font-family: $fontDefault;
-			font-size: inherit;
-			outline: 0;
-		}
-	
-		input::-webkit-input-placeholder { color: $colorDarkGrey; }
-		input:-moz-placeholder { color: $colorDarkGrey; }
-		input::-moz-placeholder { color: $colorDarkGrey; }
-		input:-ms-input-placeholder { color: $colorDarkGrey; }
-	}
 
+		/*----- Message Form -----*/
+
+		&-messageForm {
+			display: flex;
+			width: 100%;
+	
+			input {
+				width: 100%;
+				padding: 0 $padding;
+				background: $colorBlack;
+				border: none;
+				color: $colorWhite;
+				font-family: $fontDefault;
+				font-size: inherit;
+				outline: 0;
+				transition: background-color 250ms ease-out;
+
+				&:hover {
+					background: rgba($colorDarkestGrey, 0.7);
+				}
+			}
+		
+			input::-webkit-input-placeholder { color: $colorDarkGrey; }
+			input:-moz-placeholder { color: $colorDarkGrey; }
+			input::-moz-placeholder { color: $colorDarkGrey; }
+			input:-ms-input-placeholder { color: $colorDarkGrey; }
+		}
+	}
 
 
 	/*----- Nick Dialog -----*/
@@ -214,7 +274,7 @@ a:link, a:visited, a:hover, a:active {
 
 		form {
 			width: 300px;
-			padding: $padding;
+			padding: $padding*2;
 			background: rgba($colorBlack, 0.85);
 			border: 1px solid $colorGreen;
 			text-align: center;
@@ -222,7 +282,7 @@ a:link, a:visited, a:hover, a:active {
 			input {
 				background: $colorBlack;
 				color: $colorWhite;
-				padding: $padding/2 $padding/2;
+				padding: 10px;
 				border: none;
 				border-bottom: 1px dotted $colorGreen;
 				font-family: $fontDefault;
@@ -237,8 +297,8 @@ a:link, a:visited, a:hover, a:active {
 		
 			button {
 				display: inline-block;
-				margin: $padding/2 0 0 $padding/2;
-				padding: $padding/6 $padding/2;
+				margin: $padding 0 0 $padding;
+				padding: 5px 15px;
 				background: $colorLightGrey;
 				color: $colorDarkerGrey;
 				font-family: $fontDefault;

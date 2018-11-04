@@ -50,8 +50,8 @@ class Messages extends Component {
 
 	render() {
 		return(
-			<div className="Chat-messages" ref={this.chatWindowContainerRef}>
-				<ul className="Chat-messages-list">
+			<div className="Chat-body-messages" ref={this.chatWindowContainerRef}>
+				<ul className="Chat-body-messages-list">
 					{Array.from(this.props.messages.values()).map((message) => {
 						const isSystemMessage = message.hasOwnProperty('systemMessageType');
 						const isSystemSplashScreenMessage = isSystemMessage && message.systemMessageType === SystemMessageType.SPLASH_SCREEN;
@@ -61,15 +61,15 @@ class Messages extends Component {
 						const conditionalClassNames = `${isActiveMessageClassName} ${isSystemMessageClassName}`;
 
 						return (
-							<li key={message.id} className={`Chat-messages-list-item ${conditionalClassNames}`}>
-								<div className="Chat-messages-list-item-meta">
-									<span className="Chat-messages-list-item-meta-timestamp">{message.time}</span>
-									<span className="Chat-messages-list-item-meta-nick">{message.nick}</span>
+							<li key={message.id} className={`Chat-body-messages-list-item ${conditionalClassNames}`}>
+								<div className="Chat-body-messages-list-item-meta">
+									<span className="Chat-body-messages-list-item-meta-timestamp">{message.time}</span>
+									<span className="Chat-body-messages-list-item-meta-nick">{message.nick}</span>
 								</div>
 								{isSystemSplashScreenMessage ? (
-									<span className="Chat-messages-list-item-body"><pre className="Chat-messages-list-item-body-splashScreenMessage">{SplashScreenMessage}</pre></span>
+									<span className="Chat-body-messages-list-item-body"><pre className="Chat-body-messages-list-item-body-splashScreenMessage">{SplashScreenMessage}</pre></span>
 								) : (
-									<span className="Chat-messages-list-item-body">{message.body}</span>
+									<span className="Chat-body-messages-list-item-body">{message.body}</span>
 								)}
 							</li>
 						);

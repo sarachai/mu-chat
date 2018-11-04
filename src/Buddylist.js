@@ -18,7 +18,7 @@ class Buddylist extends Component {
 
 	render() {
 		return(
-			<ul className="Chat-buddylist">
+			<ul className="Chat-body-buddylist">
 				{Array.from(this.props.buddylist.values()).map((buddy) => {
 
 					const isAwayClassName = buddy.isAway ? 'is-away' : '';
@@ -28,9 +28,9 @@ class Buddylist extends Component {
 					return (
 						<li 
 							key={buddy.nick} 
-							className={`Chat-buddylist-item ${conditionalClassNames}`} 
+							className={`Chat-body-buddylist-item ${conditionalClassNames}`} 
 							onClick={this.handleClick.bind(this, buddy.socketId)}>
-							<span className="Chat-buddylist-item-nick">{buddy.nick}</span>
+							<span className="Chat-body-buddylist-item-nick">{buddy.nick}</span>
 						</li>
 					)
 				})}

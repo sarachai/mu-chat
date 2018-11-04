@@ -197,19 +197,26 @@ class App extends Component {
 
 		return(
 			<div className="Chat">
-				<Messages
-					messages={this.state.messages} />
-				<Buddylist 
-					mySocketId={this.state.mySocketId} 
-					buddylist={this.state.buddylist} 
-					openNickDialog={this.openNickDialog} />
-				<MessageForm
-					mySocketId={this.state.mySocketId} 
-					myNick={this.state.myNick} 
-					streamMessage={this.streamMessage} 
-					endMessageStream={this.endMessageStream} 
-					deleteMessageStream={this.deleteMessageStream} />				
-				<NickDialog socketIdForNickUpdate={this.state.socketIdForNickUpdate} requestNickUpdate={this.requestNickUpdate} closeNickDialog={this.closeNickDialog}/>
+				<div className="Chat-body">
+					<Messages
+						messages={this.state.messages} />
+					<Buddylist 
+						mySocketId={this.state.mySocketId} 
+						buddylist={this.state.buddylist} 
+						openNickDialog={this.openNickDialog} />
+				</div>
+				<div className="Chat-footer">
+					<MessageForm
+						mySocketId={this.state.mySocketId} 
+						myNick={this.state.myNick} 
+						streamMessage={this.streamMessage} 
+						endMessageStream={this.endMessageStream} 
+						deleteMessageStream={this.deleteMessageStream} />	
+				</div>			
+				<NickDialog 
+					socketIdForNickUpdate={this.state.socketIdForNickUpdate} 
+					requestNickUpdate={this.requestNickUpdate} 
+					closeNickDialog={this.closeNickDialog} />
 			</div>
 		);
 	}
