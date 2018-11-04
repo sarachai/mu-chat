@@ -5,7 +5,8 @@ const app = express();
 const PORT = 8081;
 
 const server = app.listen(PORT, () => {
-	console.log(`Hei Chai, your chat server is running at http://localhost:${PORT}.`);
+	console.log(server.address());
+	console.log(`Hei Chai, your chat server is running on port ${PORT}.`);
 });
 
 const io = require('socket.io').listen(server);
