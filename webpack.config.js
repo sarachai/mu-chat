@@ -18,10 +18,10 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: [
-					IS_DEVMODE ? 'style-loader' : MiniCssExtractPlugin.loader,
-					{ loader: 'css-loader' },
-					{ loader: 'postcss-loader' },
-					{ loader: 'sass-loader' }
+					'style-loader',
+					'css-loader',
+					'postcss-loader',
+					'sass-loader',
 				]
 			}
 		]
