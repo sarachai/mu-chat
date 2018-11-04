@@ -30,6 +30,7 @@ class MessageForm extends Component {
         const message = {
             id: this.messageId,
             socketId: this.props.mySocketId,
+            nick: this.props.myNick,
             time: Moment().format('HH:mm'),
             body: e.target.value,
             isActive: true

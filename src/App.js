@@ -40,7 +40,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.socket = IO.connect('http://localhost:8081');
+		this.socket = IO.connect(':8081');
 
 		// You connected.
 		this.socket.on('connect', () => {
@@ -57,7 +57,7 @@ class App extends Component {
 				return;
 			}
 
-			// Local messages for you
+			// Local messages for you, these messages are not stored on the server.
 			let splashScreenMessage = this.generateSystemMessage('', SystemMessageType.SPLASH_SCREEN);
 
 			let welcomeMessage = this.generateSystemMessage(
@@ -130,30 +130,14 @@ class App extends Component {
 
 		window.addEventListener('blur', () => {
 			this.socket.emit('clientIsAway', this.state.mySocketId);
-
-			// let awayMessage = this.generateSystemMessage(
-			// 	`${this.state.myNick} is away from the window`,
-			// 	SystemMessageType.NOTIFICATION
-			// );
-
-			// this.socket.emit('clientBroadcastMessage', awayMessage);
 		});
 
 		window.addEventListener('focus', () => {
 			this.socket.emit('clientHasReturned', this.state.mySocketId);
-
-			// let returnMessage = this.generateSystemMessage(
-			// 	`${this.state.myNick} has returned to the window`,
-			// 	SystemMessageType.NOTIFICATION
-			// );
-			
-			// this.socket.emit('clientBroadcastMessage', returnMessage);
 		});
 	}
 
 	streamMessage(message) {
-		message.nick = this.state.myNick;
-
 		this.socket.emit('clientMessage', message);
 	}
 
@@ -172,7 +156,7 @@ class App extends Component {
 
 	requestNickUpdate(newNick) {
 		const socketId = this.state.socketIdForNickUpdate;
-		let buddylist = this.state.buddylist;
+		const buddylist = this.state.buddylist;
 		let buddy = buddylist.get(socketId);
 		buddy.nick = newNick;
 
@@ -221,6 +205,7 @@ class App extends Component {
 					openNickDialog={this.openNickDialog} />
 				<MessageForm
 					mySocketId={this.state.mySocketId} 
+					myNick={this.state.myNick} 
 					streamMessage={this.streamMessage} 
 					endMessageStream={this.endMessageStream} 
 					deleteMessageStream={this.deleteMessageStream} />				
