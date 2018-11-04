@@ -1,4 +1,4 @@
-Mü-Chat // ChaiRC
+Mü-Chat
 ======
 ```html
             .                  
