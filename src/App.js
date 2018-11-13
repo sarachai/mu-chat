@@ -25,6 +25,7 @@ class App extends Component {
 		};
 
 		this.socket = null;
+		this.botSocket = null;
 
 		this.systemNick = 'Mü-Chat';
 		this.systemMessageCount = 0;
@@ -42,9 +43,39 @@ class App extends Component {
 	componentDidMount() {
 		this.socket = IO.connect(':8081');
 
+		this.botSocket = IO.connect(':8081');
+
+		this.botSocket.on('connect', () => {
+			const botBuddy = {
+				socketId: this.botSocket.id,
+				nick: 'PabloBot',
+				isAway: false
+			};
+
+			this.socket.emit('clientBotConnection', botBuddy);
+
+			this.setState({
+				botSocketId: this.socket.id
+			});
+		});
+
+		this.botSocket.on('serverBotConnectionResponse', () => {
+
+			const message = {
+				id: this.state.botSocketId + '-' + Math.floor(Math.random() * Math.floor(1000)),
+				socketId: this.state.botSocketId,
+				nick: 'PabloBot',
+				time: Moment().format('HH:mm'),
+				body: 'Prrt!',
+				isActive: false
+			};
+
+			this.socket.emit('clientMessage', message);
+		});
+
 		// You connected.
 		this.socket.on('connect', () => {
-			this.socket.emit('clientConnection' ); // server will assign a default nick
+			this.socket.emit('clientConnection'); // server will assign a default nick
 			
 			this.setState({
 				mySocketId: this.socket.id

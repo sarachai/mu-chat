@@ -30,6 +30,13 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('serverBuddylistUpdate', Array.from(buddylist));
 	});
 
+	socket.on('clientBotConnection', (buddyBot) => {
+		buddylist.set(buddyBot.socketId, buddyBot);
+
+		io.sockets.emit('serverBotConnectionResponse');
+		io.sockets.emit('serverBuddylistUpdate', Array.from(buddylist));
+	});
+
 	socket.on('disconnect', function(){ 
 		const disconnectedNick = buddylist.get(socketId).nick;
 		buddylist.delete(socketId);
