@@ -24,13 +24,13 @@ Mü-Chat
 
 Running
 ------
-The production site runs on **port 8081**.
+The production site runs on **port 80**.
 
 1. From the project root, execute:
    
    $ `npm run build && npm run server`
 
-2. Go to http://[hostname]:8081.
+2. Go to http://[hostname]:80.
 
 *NB: I haven't actually done any work to set up the Webpack build for production yet (AKA there's something weird with the CSS, the JavaScript bundle is huge... and other delights I'm sure).*
 
