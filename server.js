@@ -1,8 +1,9 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+const constants = require('./src/Constants');
 
-const PORT = 8081;
+const PORT = constants.PORT;
 
 const server = app.listen(PORT, () => {
 	console.log(`Hei Chai, your chat server is running on port ${PORT}.`);

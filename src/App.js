@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import {hot} from "react-hot-loader";
 import IO from 'socket.io-client';
 import Moment from 'moment';
+import Constants from './Constants.js';
 
 import './App.scss';
 
@@ -40,7 +41,8 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.socket = IO.connect(':8081');
+
+		this.socket = IO.connect(`:${Constants.PORT}`);
 
 		// You connected.
 		this.socket.on('connect', () => {
